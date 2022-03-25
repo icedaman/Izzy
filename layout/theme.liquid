@@ -46,6 +46,11 @@
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
       :root {
+        --colors_test: {{ settings.colors_test }};
+        --header_background_color: {{ settings.header_background_color }};
+        --header_text_color: {{ settings.header_text_color }};
+        --header_icons_hover_color: {{ settings.header_icons_hover_color }};
+
         --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
         --font-body-style: {{ settings.type_body_font.style }};
         --font-body-weight: {{ settings.type_body_font.weight }};
@@ -182,8 +187,14 @@
         font-weight: var(--font-body-weight);
       }
 
-      .transparent-nav {
+      .fixed-nav.transparent-nav .header {
         background: transparent;
+      }
+
+      .fixed-nav .header {
+        position: fixed;
+        width: 100%;
+        z-index: 20;
       }
 
       @media screen and (min-width: 750px) {
@@ -214,7 +225,8 @@
     </script>
   </head>
 
-  <body class="gradient transparent-nav">
+  <body class="{% if settings.header_transparent_sticky %}fixed-nav{% endif %}{% if settings.header_color_sticky %} transparent-nav{% endif %}">
+    
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>

@@ -99,8 +99,8 @@
     <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
   </symbol>
 </svg>
-<{% if section.settings.enable_sticky_header %}sticky-header{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}" style="{% if section.settings.background_color_transparent %}background-color: transparent{% else %} background-color: {{ section.settings.header_background_color }}{% endif %}">
-  <header  class="header header--{{ section.settings.logo_position }} page-width{% if section.settings.menu != blank %} header--has-menu{% endif %} transparent-nav" style="color: {{ section.settings.header_text_color }}">
+<div class="header-wrapper {% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  <header  class="header header--{{ section.settings.logo_position }} page-width{% if section.settings.menu != blank %} header--has-menu{% endif %}">
     {%- if section.settings.menu != blank -%}
       <header-drawer data-breakpoint="tablet">
         <details id="Details-menu-drawer-container" class="menu-drawer-container">
@@ -529,7 +529,7 @@
       </a>
     </div>
   </header>
-</{% if section.settings.enable_sticky_header %}sticky-header{% else %}div{% endif %}>
+</div>
 
 {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 
@@ -655,31 +655,27 @@
 
   const bodyTag = document.getElementsByTagName('body')[0];
   const headerWrapper = document.getElementById('shopify-section-header');
-  
-  if( bodyTag.classList.contains("transparent-nav")){
+
+  if(bodyTag.classList.contains('transparent-nav') && bodyTag.classList.contains('fixed-nav')){
     headerWrapper.style.position = 'fixed';
     headerWrapper.style.width = '100%';
     headerWrapper.style.top = '0';
     headerWrapper.style.left = '0';
     headerWrapper.style.zIndex = '7';
-  }
 
-  const onScroll = () => {
-    const scrollLocation = document.documentElement.scrollTop;
+    const onScroll = () => {
+      const scrollLocation = document.documentElement.scrollTop;
 
-    if(scrollLocation > 50){
-      bodyTag.classList.remove('transparent-nav');
-    }else{
-      bodyTag.classList.add('transparent-nav');
-    }     
+      if(scrollLocation > 50){
+        bodyTag.classList.remove('transparent-nav');
+      }else{
+        bodyTag.classList.add('transparent-nav');
+      }     
+    }
+    window.addEventListener('scroll', onScroll);
   }
-  
-  window.addEventListener('scroll', onScroll);
 
 </script>
-{%comment%}
-{%endcomment%}
-
 
 {%- if request.page_type == 'index' -%}
   {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
@@ -703,24 +699,6 @@
   "name": "t:sections.header.name",
   "class": "section-header",
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "background_color_transparent",
-      "label": "Transparent bground",
-      "default": true
-    },
-    {
-      "type": "color",
-      "id": "header_background_color",
-      "label": "Header Background Color",
-      "default": "#fff"
-    },
-    {
-      "type": "color",
-      "id": "header_text_color",
-      "label": "Header Text Color",
-      "default": "#000"
-    },
     {
       "type": "image_picker",
       "id": "logo",
@@ -773,13 +751,7 @@
       "default": true,
       "label": "t:sections.header.settings.show_line_separator.label"
     },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky_header",
-      "default": true,
-      "label": "t:sections.header.settings.enable_sticky_header.label",
-      "info": "t:sections.header.settings.enable_sticky_header.info"
-    },
+
     {
       "type": "header",
       "content": "t:sections.all.spacing"
