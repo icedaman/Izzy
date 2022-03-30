@@ -24,7 +24,7 @@
       {
         "type": "checkbox",
         "id": "header_color_sticky",
-        "label": "Transparent and Sticky Header to the Top of the page with animation(both have to be checked)",
+        "label": "Transparent and Sticky Header to the Top of the page with animation (both have to be checked)",
         "default": false
       },
       {
