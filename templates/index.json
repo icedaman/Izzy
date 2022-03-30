@@ -237,9 +237,26 @@
         "text_color": "#ffffff",
         "info_alignment": "left"
       }
-    }  
+    },
+    "hero_two": {
+      "type": "hero-two",
+      "settings": {
+        "hero_height": "100vh",
+        "button_label1": "Women",
+        "button_link1": "shopify:\/\/collections\/women",
+        "image1": "shopify:\/\/shop_images\/pexels-photo-1928645.jpg",
+        "background_color1": "#000000",
+        "opacity1": 50,
+        "button_label2": "Men",
+        "button_link2": "shopify:\/\/collections\/men",
+        "image2": "shopify:\/\/shop_images\/pexels-photo-2245433.jpg",
+        "background_color2": "#000000",
+        "opacity2": 50
+      }
+    }
   },
   "order": [
+    "hero_two",
     "hero_one",
     "image_banner",
     "rich_text",
